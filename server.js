@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const cors = require('cors');
 const express = require('express');
 const cloud = require('./');
@@ -6,7 +7,7 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-const functions = require('bulk-require')(__dirname, ['api/*.js']);
+const functions = require('bulk-require')(`${process.cwd()}/api`, ['*.js']);
 Object.keys(functions).forEach(key => {
   const fn = functions[key];
 
