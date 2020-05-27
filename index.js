@@ -14,7 +14,6 @@ const defaultConnectionOptions = {
 };
 
 const getConfig = () => config || defaultConfig;
-const lambdaSymbol = Symbol('mongoose-cloud:lambda');
 
 module.exports = {
   init: function(newConfig) {
@@ -38,10 +37,7 @@ module.exports = {
   },
   // Support different syntaxes: AWS lambda syntax vs plain async functions
   lambda: function(fn) {
-    fn[lambdaSymbol] = true;
+    fn.$__type = 'LAMBDA';
     return fn;
-  },
-  isLambda: function(fn) {
-    return fn != null && fn[lambdaSymbol];
   }
 };
