@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+const bodyParser = require('body-parser');
 const cors = require('cors');
 const express = require('express');
 const cloud = require('./');
@@ -12,7 +13,7 @@ Object.keys(functions).forEach(key => {
   const fn = functions[key];
 
   if (fn.$__type === 'LAMBDA') {
-    app.post(`/api/${key}`, express.text({ type: () => true }), function(req, res) {
+    app.post(`/api/${key}`, bodyParser.text({ type: () => true }), function(req, res) {
       const params = { body: req.body };
       fn(params).
         then(obj => res.json(obj)).
@@ -34,3 +35,4 @@ Object.keys(functions).forEach(key => {
 
 app.listen(3000);
 console.log('App listening on port 3000');
+
