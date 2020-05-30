@@ -13,6 +13,7 @@ Object.keys(functions).forEach(key => {
   const fn = functions[key];
 
   if (fn.$__type === 'LAMBDA') {
+    console.log(`Mounted POST /api/${key} (LAMBDA)`);
     app.post(`/api/${key}`, bodyParser.text({ type: () => true }), function(req, res) {
       const params = { body: req.body };
       fn(params).
@@ -22,6 +23,7 @@ Object.keys(functions).forEach(key => {
         });
     });
   } else {
+    console.log(`Mounted POST /api/${key}`);
     app.post(`/api/${key}`, express.json(), function(req, res) {
       const params = { ...req.query, ...req.body, ...req.params };
       fn(params).
