@@ -6,6 +6,7 @@
   },
   "dependencies": {
     "bulk-require": "1.x",
+    "chalk": "4.x",
     "cors": "2.8.5",
     "express": "4.x"
   },
