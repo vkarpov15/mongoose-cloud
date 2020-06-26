@@ -29,7 +29,7 @@ module.exports = {
     }
 
     uri = uri || getConfig().uri || 'mongodb://localhost:27017/test';
-    options = options || getConfig().options || defaultConnectionOptions;
+    options = options || { ...defaultConnectionOptions, ...getConfig() };
 
     mongoose.connect(uri, options);
     conn = mongoose.connection;
