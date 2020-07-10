@@ -15,17 +15,20 @@ Object.keys(functions).forEach(key => {
 
   if (fn.$__type === 'LAMBDA') {
     console.log(`Mounted POST /api/${key} (LAMBDA)`);
-    app.post(`/api/${key}`, bodyParser.text({ type: () => true }), function(req, res) {
+    const lambdaWrapper = function lambdaWrapper(req, res) {
       const params = { body: req.body };
       fn(params).
         then(obj => res.json(obj)).
         catch(err => {
           res.status(err.status || 500).json({ message: err.message, stack: err.stack });
         });
-    });
+    };
+    app.post(`/api/${key}`, bodyParser.text({ type: () => true }), lambdaWrapper);
+    app.options(`/api/${key}`, lambdaWrapper);
+    app.head(`/api/${key}`, lambdaWrapper);
   } else {
     console.log(`Mounted POST /api/${key}`);
-    app.post(`/api/${key}`, express.json(), function(req, res) {
+    const pureWrapper = function pureWrapper(req, res) {
       const params = { ...req.query, ...req.body, ...req.params };
       console.log(chalk.blue(`${new Date().toISOString()} POST /api/${key}`), params);
       fn(params).
@@ -35,7 +38,10 @@ Object.keys(functions).forEach(key => {
           console.log(err.stack);
           res.status(err.status || 500).json({ message: err.message, stack: err.stack });
         });
-    });
+    };
+    app.post(`/api/${key}`, express.json(), pureWrapper);
+    app.options(`/api/${key}`, pureWrapper);
+    app.head(`/api/${key}`, pureWrapper);
   }
 });
 
