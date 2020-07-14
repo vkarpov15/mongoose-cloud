@@ -1,6 +1,6 @@
 {
   "name": "mongoose-cloud",
-  "version": "0.0.10",
+  "version": "0.0.11",
   "bin": {
     "mongoose-cloud": "./server.js"
   },
