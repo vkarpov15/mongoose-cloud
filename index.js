@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 let config = null;
 let conn = null;
+
 const defaultConfig = Object.freeze({});
 const defaultConnectionOptions = {
   useNewUrlParser: true,
@@ -24,7 +25,7 @@ module.exports = {
   },
   config: getConfig,
   connect: async function(uri, options) {
-    if (conn != null) {
+    if (conn != null && conn.readyState !== 0) {
       return conn;
     }
 
