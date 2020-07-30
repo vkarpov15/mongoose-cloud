@@ -1,15 +1,6 @@
 {
   "name": "mongoose-cloud",
-  "version": "0.0.11",
-  "bin": {
-    "mongoose-cloud": "./server.js"
-  },
-  "dependencies": {
-    "bulk-require": "1.x",
-    "chalk": "4.x",
-    "cors": "2.8.5",
-    "express": "4.x"
-  },
+  "version": "0.0.12",
   "peerDependencies": {
     "mongoose": "5.x"
   },
